@@ -1,9 +1,25 @@
 
 def fetch_stock_data(ticker='NVDA', period="12M"):
+    import streamlit as st
     import requests
-    api_key = 'PKR3524QYQ5NYWMYIT6WPSVXBX'
-    api_secret = 'EMuQVETSkD4iTKzP3MXArTz62T8aEQVQLBkw8ffdGozu'
+
+    
+    api_key = st.secrets["api_key"]
+    api_secret = st.secrets["api_secret"]
+
+
+    if not api_key or not api_secret:
+        
+        # Access the environment variables
+        from dotenv import load_dotenv
+        import os
+        # Load environment variables from .env file
+        load_dotenv()
+        api_key = os.getenv('api_key')
+        api_secret = os.getenv('api_secret')
+        
     base_url = 'https://data.alpaca.markets/v2/stocks/bars'
+    
     # Define the API endpoint and parameters
     url = (           
         base_url + 
